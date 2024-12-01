@@ -74,4 +74,31 @@ def customer_interface(customer_name):
     tk.Label(frame, text="Select Service:").grid(row=0, column=0, pady=5, sticky="e")
     service_var = tk.StringVar()
     service_menu = ttk.Combobox(frame, textvariable=service_var, values=list(get_services().keys()), state="readonly")
-    servi
+    service_menu.grid(row=0, column=1, pady=5)
+
+    # Date selection
+    tk.Label(frame, text="Select Date:").grid(row=1, column=0, sticky="e")
+    create_date_dropdowns(frame)
+
+    # Time entry
+    tk.Label(frame, text="Select Time (HH:MM):").grid(row=4, column=0, pady=5, sticky="e")
+    time_entry = tk.Entry(frame)
+    time_entry.grid(row=4, column=1, pady=5)
+
+    # Staff selection with scrollable listbox
+    tk.Label(frame, text="Select Staff:").grid(row=5, column=0, pady=5, sticky="e")
+    staff_frame = tk.Frame(frame)
+    staff_frame.grid(row=5, column=1, pady=5)
+    staff_listbox = tk.Listbox(staff_frame, height=5)
+    staff_listbox.pack(side=tk.LEFT)
+    staff_scrollbar = tk.Scrollbar(staff_frame, command=staff_listbox.yview)
+    staff_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    staff_listbox.config(yscrollcommand=staff_scrollbar.set)
+
+    for staff in get_staff_names():
+        staff_listbox.insert(tk.END, staff)
+
+    # Book service button
+    tk.Button(frame, text="Book Service", command=book_service).grid(row=6, column=1, pady=10)
+
+    window.mainloop()
